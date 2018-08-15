@@ -3,11 +3,12 @@
 
 from dictionary import Dictionary
 from charpicker import getScramble
+from scrambled import *
 
 dictionary = Dictionary()
 dictionary.loadDictionary("dictionary.txt")
 
-print (str(dictionary.searchWord("table") == True))
+(str(dictionary.searchWord("table") == True))
 print (str(dictionary.searchWord("ball") == True))
 print (str(dictionary.searchWord("dog") == True))
 print (str(dictionary.searchWord("cock") == True))
@@ -34,3 +35,9 @@ print (str(s1 != s2))
 print (str(len(s1) == 50))
 print (str(len(s2) == 50))
 print (str(len(s3) == 5))
+
+print (str(calculate_score(dictionary, "teas") == 1))
+print (str(calculate_score(dictionary, "tEAs") == 1))
+print (str(calculate_score(dictionary, ("teas","teas","teas","teas")) == 1))
+print (str(calculate_score(dictionary, ("table","teas","tables","tables","casdaSDte")) == 6))
+print (str(calculate_score(dictionary, ("taBle","tEas","Tables","tables","casdaSDte")) == 6))
