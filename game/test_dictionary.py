@@ -38,6 +38,8 @@ print (str(len(s3) == 5))
 
 print (str(calculate_score(dictionary, "teas") == 1))
 print (str(calculate_score(dictionary, "tEAs") == 1))
-print (str(calculate_score(dictionary, ("teas","teas","teas","teas")) == 1))
-print (str(calculate_score(dictionary, ("table","teas","tables","tables","casdaSDte")) == 6))
-print (str(calculate_score(dictionary, ("taBle","tEas","Tables","tables","casdaSDte")) == 6))
+print (str(calculate_score(dictionary, ("teas", "teas", "teas", "teas")) == 1))
+print (str(calculate_score(
+    dictionary, ("table", "teas", "tables", "tables", "casdaSDte")) == 6))
+print (str(calculate_score(
+    dictionary, ("taBle", "tEas", "Tables", "tables", "casdaSDte")) == 6))
