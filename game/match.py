@@ -8,7 +8,7 @@ import time
 class Match:
     MATCH_LEN_SECONDS = 60 * 2
 
-    def __init__(self, userIds, num):
+    def __init__(self, userIds, srambleLen):
         self.userIds = set(userIds)
 
         # TODO: Avoid reinitialization of dictionary. Consider daemonizing it
@@ -16,7 +16,7 @@ class Match:
         # -- Spanish, English, Spanglish
         self.dictionary = Dictionary()
         self.dictionary.loadDictionary("dictionary.txt")
-        self.scramble = getScramble(dictionary, num)
+        self.scramble = getScramble(self.dictionary, srambleLen)
         self.startTime = time.time()
         self.userAnswers = {}
         self.active = True
@@ -27,10 +27,14 @@ class Match:
 
     def userLeft(self, userId):
         if self.active is True:
-            self.userIds.remove(userId)
+            if userId in self.userIds:
+                self.userIds.remove(userId)
 
     def addUserWords(self, userId, wordSet):
         if not self.active:
+            return False
+
+        if userId not in self.userIds:
             return False
 
         elapsedTime = time.time() - self.startTime
