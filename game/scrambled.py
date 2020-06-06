@@ -1,5 +1,5 @@
 #!/usr/env/python
-from dictionary import Dictionary
+from .dictionary import Dictionary
 
 
 def sanitize_input(wordList):
@@ -11,11 +11,12 @@ def sanitize_input(wordList):
 
 
 def purge_invalid_words(dictionary, wordList):
-    # Note the list is being copied per https://docs.python.org/3/tutorial/controlflow.html
-    for word in wordList[:]:
-        if dictionary.searchWord(word) is False:
-            wordList.remove(word)
-    return wordList
+    MIN_WORDLEN = 4
+    validWords = []
+    for word in wordList:
+        if dictionary.searchWord(word) is True and len(word) >= MIN_WORDLEN:
+            validWords.append(word)
+    return validWords
 
 
 def remove_duplicates(wordList):

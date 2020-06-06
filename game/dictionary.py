@@ -1,7 +1,6 @@
 #!/usr/env/python
 import os
 
-
 class Node:
     def __init__(self):
         self.isWord = False

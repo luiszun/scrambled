@@ -1,7 +1,7 @@
-from dictionary import Dictionary
-from charpicker import getScramble
-from scrambled import *
-from gamedb import *
+from .dictionary import Dictionary
+from .charpicker import getScramble
+from .scrambled import *
+from .gamedb import *
 import time
 
 
@@ -19,6 +19,9 @@ class Match:
         self.scramble = getScramble(self.dictionary, srambleLen)
         self.startTime = time.time()
         self.userAnswers = {}
+        self.userScore = {}
+
+        # This match is still being active (not just a log)
         self.active = True
 
     def addUser(self, userId):
@@ -62,11 +65,24 @@ class Match:
             matchAbort = True
 
         for user in self.userIds:
-            self.userScore[user] = calculate_score(
-                self.dictionary, self.userAnswers[user])
+            answers = {}
+            if user in self.userAnswers:
+                answers = self.userAnswers[user]
 
+            self.userScore[user] = calculate_score(
+                self.dictionary, answers)
+
+        self.updateScores()
         return True
 
     def updateScores(self):
-        # TODO: Actually keep score :)
+        db = getDB()
+        cur = db.cursor()
+
+        for user in self.userIds:
+            score = self.userScore[user]
+            cur.execute(
+                "INSERT INTO user (id, username, score) VALUES(?, ?, ?) ON CONFLICT(id) DO UPDATE SET score = score+?", [user, user, score, score])
+        db.commit()
+
         return True

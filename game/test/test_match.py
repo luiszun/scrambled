@@ -2,7 +2,7 @@
 # http://www.lexically.net/downloads/BNC_wordlists/e_lemma.txt
 import sys
 sys.path.append('..')
-from match import *
+from game.match import *
 import unittest
 
 
@@ -36,6 +36,11 @@ class TestMatch(unittest.TestCase):
         self.assertTrue(self.match.addUserWords("two", {"a", "b", "c"}))
         self.assertTrue(self.match.addUserWords("three", {"a", "b", "c"}))
 
+    def test_endMatch(self):
+        self.match.addUserWords("two", {"altitude", "b", "carrot"})
+        self.match.addUserWords("three", {"a", "banner", "c"})
+        self.match.endMatch()
+        self.assertEqual(self.match.userScore["two"], 8)
 
 if __name__ == '__main__':
     unittest.main()

@@ -3,9 +3,9 @@
 import sys
 sys.path.append('..')
 
-from dictionary import Dictionary
-from charpicker import getScramble
-from scrambled import *
+from game.dictionary import Dictionary
+from game.charpicker import getScramble
+from game.scrambled import *
 import unittest
 
 class TestDictionary(unittest.TestCase):
