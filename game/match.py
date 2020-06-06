@@ -69,11 +69,20 @@ class Match:
             if user in self.userAnswers:
                 answers = self.userAnswers[user]
 
+            answers = self.purgeInvalidAnswers(answers)
+
             self.userScore[user] = calculate_score(
                 self.dictionary, answers)
 
         self.updateScores()
         return True
+
+    def purgeInvalidAnswers(self, answers):
+        finalAnswers = []
+        for answer in answers:
+            if set(answer).issubset(self.scramble):
+                finalAnswers.append(answer)
+        return finalAnswers
 
     def updateScores(self):
         db = getDB()

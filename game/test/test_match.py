@@ -1,9 +1,9 @@
 #!/usr/env/python
 # http://www.lexically.net/downloads/BNC_wordlists/e_lemma.txt
+import unittest
+from game.match import *
 import sys
 sys.path.append('..')
-from game.match import *
-import unittest
 
 
 class TestMatch(unittest.TestCase):
@@ -37,10 +37,13 @@ class TestMatch(unittest.TestCase):
         self.assertTrue(self.match.addUserWords("three", {"a", "b", "c"}))
 
     def test_endMatch(self):
+        self.match.scramble = "altiudecrobn"
         self.match.addUserWords("two", {"altitude", "b", "carrot"})
-        self.match.addUserWords("three", {"a", "banner", "c"})
+        self.match.addUserWords(
+            "three", {"a", "banner", "c", "acknowledgement"})
         self.match.endMatch()
         self.assertEqual(self.match.userScore["two"], 8)
+
 
 if __name__ == '__main__':
     unittest.main()
